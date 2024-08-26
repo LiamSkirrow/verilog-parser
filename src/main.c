@@ -19,14 +19,12 @@ int main(int argc, char ** argv)
     }
     else
     {
+        // Initialise the parser.
+        verilog_parser_init();
 
         int F = 0;
         for(F = 1; F < argc; F++)
         {
-            
-            // Initialise the parser.
-            verilog_parser_init();
-
             // Setup the preprocessor to look in ./tests/ for include files.
             ast_list_append(yy_preproc -> search_dirs, "./tests/");
             ast_list_append(yy_preproc -> search_dirs, "./");
@@ -53,8 +51,11 @@ int main(int argc, char ** argv)
                 if(argc<=2) return 1;
             }
 
-            verilog_resolve_modules(yy_verilog_source_tree);
         }
     }
+
+    verilog_resolve_modules(yy_verilog_source_tree);
+    printf("num items: %d\n", yy_verilog_source_tree->modules->items);
+
     return 0;
 }
