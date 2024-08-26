@@ -56,6 +56,18 @@ int main(int argc, char ** argv)
 
     verilog_resolve_modules(yy_verilog_source_tree);
     printf("num items: %d\n", yy_verilog_source_tree->modules->items);
+    for (int i = 0; i < yy_verilog_source_tree->modules->items; i++){
+        ast_module_declaration *mod = ast_list_get(yy_verilog_source_tree->modules, i);
+        printf("elem %d name: %s\n", i, mod->identifier->identifier);
+        printf("num mod instantiation: %d\n", mod->module_instantiations->items);
+
+        ast_module_instantiation *mod_dec = ast_list_get(mod->module_instantiations, 0);
+        printf("is resolved?: %d\n", mod_dec->resolved);
+        // ^^^ fine up to here I think ^^^
+
+        // void *mod_dec_inst_name = ast_list_get(mod_dec->module_instances, 0);
+        // printf("Name: %s\n", (char *) mod_dec->module_instances->tail->data);
+    }
 
     return 0;
 }
